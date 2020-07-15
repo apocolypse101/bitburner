@@ -8,11 +8,15 @@ if (serverExists('pserv-0')) {
 if ((getServerMoneyAvailable('home') > 50000 * ramToBuy)) {
   ramToBuy *= 2;
 
-  while (getServerMoneyAvailable('home') > 50000 * ramToBuy) {
+  while (getServerMoneyAvailable('home') > 50000 * ramToBuy && (50000 * ramToBuy) < 100000000) {
     ramToBuy *= 2;
   }
   ramToBuy /= 2;
 }
+if (ramToBuy > 1024){
+        ramToBuy = 1024;
+    }
+
 print('Buying player servers. Target: ' + ramToBuy + ' GB RAM for ' + 50000 * ramToBuy + '$');
 
 i = 0;
@@ -26,11 +30,14 @@ while (doLoop) {
     if ((getServerMoneyAvailable('home') > 50000 * ramToBuy)) {
       ramToBuy *= 4;
 
-      while (getServerMoneyAvailable('home') > 50000 * ramToBuy) {
+      while (getServerMoneyAvailable('home') > 50000 * ramToBuy && (50000 * ramToBuy) < 100000000) {
         ramToBuy *= 4;
       }
 
       ramToBuy /= 4;
+    }
+    if (ramToBuy > 1024){
+        ramToBuy = 1024;
     }
 
     print('Buying player servers. Target: ' + ramToBuy + ' GB RAM for ' + 50000 * ramToBuy + '$');
@@ -47,7 +54,7 @@ while (doLoop) {
         }
   
         if (!serverExists('pserv-' + i)) {
-          hostname = purchaseServer('pserv-' + i, ramToBuy);
+          var hostname = purchaseServer('pserv-' + i, ramToBuy);
           if (hostname) {
             for (j = 0; j < scriptsToCopy.length; ++j) {
               scp(scriptsToCopy[j], hostname);
